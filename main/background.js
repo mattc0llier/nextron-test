@@ -2,9 +2,12 @@ import { app, ipcMain } from 'electron';
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
 const wifi = require('node-wifi');
+import find from 'local-devices'
+
 
 let currentNetwork = [];
 let availableNetworks = [];
+let networkDevices = [];
 
 wifi.init({
   iface: null // network interface, choose a random wifi interface if set to null
@@ -28,6 +31,21 @@ wifi.scan((error, networks) => {
     availableNetworks = networks;
   }
 });
+
+// Find all local network devices.
+find().then(devices => {
+  console.log('devices', devices) 
+  networkDevices = devices;
+  
+  /*
+  [
+    { name: '?', ip: '192.168.0.10', mac: '...' },
+    { name: '...', ip: '192.168.0.17', mac: '...' },
+    { name: '...', ip: '192.168.0.21', mac: '...' },
+    { name: '...', ip: '192.168.0.22', mac: '...' }
+  ]
+  */
+})
 
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -78,6 +96,7 @@ ipcMain.on('wifi-sync', (event) => {
   event.returnValue = {
     currentNetwork: currentNetwork,
     availableNetworks: availableNetworks,
+    networkDevices: networkDevices
   }
   // event.sender.send('wifi', currentNetwork);
 });

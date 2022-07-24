@@ -8,9 +8,10 @@ import s from './home.module.css';
 const ipcRenderer = electron.ipcRenderer || false;
 
 function Home() {
-  const [message, setMessage] = useState('no ipc message');
+  // const [message, setMessage] = useState('no ipc message');
   const [currentNetwork, setCurrentNetwork] = useState(null);
   const [networks, setNetworks] = useState(null);
+  const [devices, setDevices] = useState(null);
 
   const onClickWithIpc = () => {
     ipcRenderer.send('ping-pong', 'some data from ipcRenderer');
@@ -21,6 +22,7 @@ function Home() {
     console.log(currentWifi);
     setCurrentNetwork(currentWifi.currentNetwork[0]);
     setNetworks(currentWifi.availableNetworks);
+    setDevices(currentWifi.networkDevices);
   };
 
   const onClickWithIpcSync = () => {
@@ -93,6 +95,21 @@ function Home() {
           ))}
           </div>
         : <p>No networks</p>}
+
+        
+        <h1 className={s.words}>Devices on Network</h1>
+
+        {devices ?
+        <div className={s.networks}>
+          {devices.map(device => (
+              <div key={device.mac} className={s.network}>
+                <p>{device.name}</p>
+                <p>{device.ip}</p>
+                <p>{device.mac}</p>
+              </div>
+          ))}
+          </div>
+        : <p>No devices</p>} 
         </div>
     </React.Fragment>
   );
