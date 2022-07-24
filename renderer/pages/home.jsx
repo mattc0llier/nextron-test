@@ -63,21 +63,17 @@ function Home() {
         <title>Workstate</title>
       </Head>
       <div>
-
-        <button onClick={onClickWithIpc}>IPC messaging</button>
-        <button onClick={onClickWithIpcSync}>IPC messaging (sync)</button>
-        <button onClick={onClickWithNetwork}>{currentNetwork ? currentNetwork.ssid : "Get current network"}</button>
-        <p>{message}</p>
+        <button onClick={onClickWithNetwork}>Get current network</button>
 
         <h1 className={s.words}>Current Network</h1>
         {currentNetwork ? 
           <div className={s.network}>
             <p className={s.ssid}>{currentNetwork.ssid}</p>
-            <p>{currentNetwork.channel}</p>
-            <p>{currentNetwork.signal_level}</p>
-            <p>{currentNetwork.security}</p>
-            <p>{currentNetwork.quality}</p>
-            <p>{currentNetwork.frequency}</p>
+            <p>Channel: {currentNetwork.channel}</p>
+            <p>Signal: {currentNetwork.signal_level}</p>
+            <p>Security: {currentNetwork.security}</p>
+            <p>Quality: {currentNetwork.quality}</p>
+            <p>Frequency: {currentNetwork.frequency}</p>
           </div>
         : <p>No current network</p>}
        
@@ -88,11 +84,11 @@ function Home() {
           {networks.map(network => (
               <div key={network.ssid} className={s.network}>
                 <p className={s.ssid}>{network.ssid}</p>
-                <p>{network.channel}</p>
-                <p>{network.signal_level}</p>
-                <p>{network.security}</p>
-                <p>{network.quality}</p>
-                <p>{network.frequency}</p>
+                <p>Channel: {network.channel}</p>
+                <p>Signal: {network.signal_level}</p>
+                <p>Security: {network.security}</p>
+                <p>Quality: {network.quality}</p>
+                <p>Frequency: {network.frequency}</p>
               </div>
           ))}
           </div>
