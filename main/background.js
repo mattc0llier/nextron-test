@@ -12,6 +12,7 @@ let currentNetwork = null;
 let availableNetworks = [];
 let networkDevices = [];
 let tray
+// let dock
 
 /////////////
 
@@ -20,6 +21,9 @@ let tray
   // const getNetworkStats = () => si.networkInterfaces().then(data => console.log('network stats', data));
 
   // setInterval(getNetworkStats, 1000);
+
+  si.system().then(data => console.log(data));
+  si.uuid().then(data => console.log(data));
 
 
 ///
@@ -55,6 +59,9 @@ wifi.scan((error, networks) => {
 
 ///////
 
+// The tray menu
+// Need to turn this into a window app near the tray icon
+
 app.whenReady().then(() => {
   const icon = nativeImage.createFromDataURL('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEnSURBVHgBnVOBkURAEJy6ugBkQAZkQAhkQAYyIANkIAMyQARCQASIYH976tYv1l/Vd9VU3ezszPZ0HxIa1nUVYRgKIhKO44hxHMU3kJ4URcHNKizL+jrgRRqGYdBT2raNlmWhv3Aa4Pv+qSjXINu2b00YfDx2pYQ1PM9jDaZpulHGGVZDaxzHgkx74RIGmJDn+UknehIHr/R9f+T4HQQBD0agOU1T8wAufF5Q66C56zquw25l8W0AiieKMuq6Fk94XRWW1Dl0mJxQeF8PqqriAbBwnmeS1ClJEmqahvZ9Zwtd1+X6zUYobLJPNh/W0edvru4QxICf+AaevAcgpq5LWZZ8/o6iiKkCUqxfagZtjLlOrW3bJ7GZGVjgPmxW4BXgcZZl4j/4AblXR6FcwAEjAAAAAElFTkSuQmCC')
   tray = new Tray(icon)
@@ -74,6 +81,15 @@ app.whenReady().then(() => {
 })
 
 ////
+
+// Dock icon
+
+app.dock.setIcon('/Users/matthewcollier/Documents/Sites/zoom/ipc-app/renderer/public/images/logo.png')
+
+
+
+
+///
 
 const isProd = process.env.NODE_ENV === 'production';
 
